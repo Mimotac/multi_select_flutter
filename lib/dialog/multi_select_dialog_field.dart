@@ -57,6 +57,9 @@ class MultiSelectDialogField<V> extends FormField<List<V>> {
   /// Sets the color of the checkbox or chip when it's selected.
   final Color? selectedColor;
 
+  /// Sets the color of the scrollbar.
+  final Color? scrollbarColor;
+
   /// Sets a fixed height on the dialog.
   final double? dialogHeight;
 
@@ -125,6 +128,7 @@ class MultiSelectDialogField<V> extends FormField<List<V>> {
     this.cancelText,
     this.barrierColor,
     this.selectedColor,
+    this.scrollbarColor,
     this.searchHint,
     this.dialogHeight,
     this.dialogWidth,
@@ -170,6 +174,7 @@ class MultiSelectDialogField<V> extends FormField<List<V>> {
                 cancelText: cancelText,
                 barrierColor: barrierColor,
                 selectedColor: selectedColor,
+                scrollbarColor: scrollbarColor,
                 searchHint: searchHint,
                 dialogHeight: dialogHeight,
                 dialogWidth: dialogWidth,
@@ -208,6 +213,7 @@ class _MultiSelectDialogFieldView<V> extends StatefulWidget {
   final Text? cancelText;
   final Color? barrierColor;
   final Color? selectedColor;
+  final Color? scrollbarColor;
   final double? dialogHeight;
   final double? dialogWidth;
   final String? searchHint;
@@ -242,6 +248,7 @@ class _MultiSelectDialogFieldView<V> extends StatefulWidget {
     this.cancelText,
     this.barrierColor,
     this.selectedColor,
+    this.scrollbarColor,
     this.searchHint,
     this.dialogHeight,
     this.dialogWidth,
@@ -278,6 +285,7 @@ class _MultiSelectDialogFieldView<V> extends StatefulWidget {
         cancelText = field.cancelText,
         barrierColor = field.barrierColor,
         selectedColor = field.selectedColor,
+        scrollbarColor = field.scrollbarColor,
         dialogHeight = field.dialogHeight,
         dialogWidth = field.dialogWidth,
         searchHint = field.searchHint,
@@ -397,6 +405,7 @@ class __MultiSelectDialogFieldViewState<V>
           searchIcon: widget.searchIcon,
           closeSearchIcon: widget.closeSearchIcon,
           unselectedColor: widget.unselectedColor,
+          scrollbarColor: widget.scrollbarColor,
           backgroundColor: widget.backgroundColor,
           colorator: widget.colorator,
           searchHint: widget.searchHint,

@@ -35,6 +35,9 @@ class MultiSelectDialog<T> extends StatefulWidget with MultiSelectActions<T> {
   /// Sets the color of the checkbox or chip when it's selected.
   final Color? selectedColor;
 
+  /// Sets the color of the scrollbar.
+  final Color? scrollbarColor;
+
   /// Sets a fixed height on the dialog.
   final double? height;
 
@@ -89,6 +92,7 @@ class MultiSelectDialog<T> extends StatefulWidget with MultiSelectActions<T> {
     this.confirmText,
     this.cancelText,
     this.selectedColor,
+    this.scrollbarColor,
     this.searchHint,
     this.height,
     this.width,
@@ -284,19 +288,25 @@ class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
         width: widget.width ?? MediaQuery.of(context).size.width * 0.73,
         child: widget.listType == null ||
                 widget.listType == MultiSelectListType.LIST
-            ? Scrollbar(
+            ? RawScrollbar(
+                thumbColor: widget.scrollbarColor,
+                radius: Radius.circular(20),
+                thickness: 5,
                 child: ListView.builder(
-                itemCount: _items.length,
-                itemBuilder: (context, index) {
-                  return _buildListItem(_items[index]);
-                },
-              ))
-            : Scrollbar(
+                  itemCount: _items.length,
+                  itemBuilder: (context, index) {
+                    return _buildListItem(_items[index]);
+                  },
+                ))
+            : RawScrollbar(
+                thumbColor: widget.scrollbarColor,
+                radius: Radius.circular(20),
+                thickness: 5,
                 child: SingleChildScrollView(
-                child: Wrap(
-                  children: _items.map(_buildChipItem).toList(),
-                ),
-              )),
+                  child: Wrap(
+                    children: _items.map(_buildChipItem).toList(),
+                  ),
+                )),
       ),
       actions: <Widget>[
         TextButton(
