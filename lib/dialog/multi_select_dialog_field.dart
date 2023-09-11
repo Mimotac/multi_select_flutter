@@ -29,6 +29,9 @@ class MultiSelectDialogField<V> extends FormField<List<V>> {
   /// Fires when the an item is selected / unselected.
   final void Function(List<V>)? onSelectionChanged;
 
+  /// Fires when the field is tapped.
+  final void Function()? onTap;
+
   /// Overrides the default MultiSelectChipDisplay attached to this field.
   /// If you want to remove it, use MultiSelectChipDisplay.none().
   final MultiSelectChipDisplay<V>? chipDisplay;
@@ -115,6 +118,7 @@ class MultiSelectDialogField<V> extends FormField<List<V>> {
     this.listType,
     this.decoration,
     this.onSelectionChanged,
+    this.onTap,
     this.chipDisplay,
     this.searchable = false,
     this.confirmText,
@@ -159,6 +163,7 @@ class MultiSelectDialogField<V> extends FormField<List<V>> {
                 listType: listType,
                 onConfirm: onConfirm,
                 onSelectionChanged: onSelectionChanged,
+                onTap: onTap,
                 initialValue: initialValue,
                 searchable: searchable,
                 confirmText: confirmText,
@@ -194,6 +199,7 @@ class _MultiSelectDialogFieldView<V> extends StatefulWidget {
   final Widget? title;
   final List<MultiSelectItem<V>> items;
   final void Function(List<V>)? onSelectionChanged;
+  final void Function()? onTap;
   final MultiSelectChipDisplay<V>? chipDisplay;
   final List<V> initialValue;
   final void Function(List<V>)? onConfirm;
@@ -227,6 +233,7 @@ class _MultiSelectDialogFieldView<V> extends StatefulWidget {
     this.listType,
     this.decoration,
     this.onSelectionChanged,
+    this.onTap,
     this.onConfirm,
     this.chipDisplay,
     this.initialValue = const [],
@@ -262,6 +269,7 @@ class _MultiSelectDialogFieldView<V> extends StatefulWidget {
         listType = field.listType,
         decoration = field.decoration,
         onSelectionChanged = field.onSelectionChanged,
+        onTap = field.onTap,
         onConfirm = field.onConfirm,
         chipDisplay = field.chipDisplay,
         initialValue = field.initialValue,
@@ -423,6 +431,9 @@ class __MultiSelectDialogFieldViewState<V>
       children: <Widget>[
         InkWell(
           onTap: () {
+            if (widget.onTap != null) {
+              widget.onTap!();
+            }
             _showDialog(context);
           },
           child: Container(
