@@ -131,6 +131,7 @@ class MultiSelectChipDisplay<V> extends StatelessWidget {
         padding: const EdgeInsets.all(3.0),
         child: Material(
             borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+            elevation: 1.0,
             color: Colors.transparent,
             child: Ink(
                 decoration: BoxDecoration(
@@ -148,16 +149,17 @@ class MultiSelectChipDisplay<V> extends StatelessWidget {
                 child: InkWell(
                   borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                   child: Padding(
-                    padding: EdgeInsets.only(right: 16.0, bottom: 8.0, top: 8),
+                    padding:
+                        EdgeInsets.only(right: 14.0, bottom: 6.0, top: 6.0),
                     child: Row(mainAxisSize: MainAxisSize.min, children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 11.0),
+                        padding: EdgeInsets.symmetric(horizontal: 9.0),
                         child: icon != null
                             ? Icon(
                                 icon!.icon,
                                 color: colorator != null &&
                                         colorator!(item.value) != null
-                                    ? colorator!(item.value)!.withOpacity(1)
+                                    ? colorator!(item.value)!.withOpacity(1.0)
                                     : icon!.color ??
                                         Theme.of(context).primaryColor,
                                 size: 18,
@@ -176,7 +178,7 @@ class MultiSelectChipDisplay<V> extends StatelessWidget {
                                 : textStyle != null && textStyle!.color != null
                                     ? textStyle!.color
                                     : chipColor != null
-                                        ? chipColor!.withOpacity(1)
+                                        ? chipColor!.withOpacity(1.0)
                                         : null,
                             fontSize:
                                 textStyle != null ? textStyle!.fontSize : null,
