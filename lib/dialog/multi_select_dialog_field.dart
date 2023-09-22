@@ -439,6 +439,7 @@ class __MultiSelectDialogFieldViewState<V>
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         InkWell(
+          borderRadius: BorderRadius.circular(12.0),
           onTap: () {
             if (widget.onTap != null) {
               widget.onTap!();
