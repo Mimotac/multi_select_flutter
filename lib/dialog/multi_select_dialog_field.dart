@@ -485,7 +485,7 @@ class __MultiSelectDialogFieldViewState<V>
                 Row(
                   children: [
                     Padding(
-                        padding: const EdgeInsetsDirectional.only(start: 12.0),
+                        padding: const EdgeInsetsDirectional.only(end: 12.0),
                         child: widget.prefixIcon ?? const Icon(Icons.category)),
                     widget.buttonText ?? const Text("Select"),
                   ],
