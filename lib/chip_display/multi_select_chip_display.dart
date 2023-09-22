@@ -92,13 +92,25 @@ class MultiSelectChipDisplay<V> extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: scroll ? 0 : 10),
       child: scroll
           ? Container(
-              padding: EdgeInsets.only(bottom: 3.0),
               width: MediaQuery.of(context).size.width,
               height: height ?? MediaQuery.of(context).size.height * 0.08,
               child: scrollBar != null
                   ? Scrollbar(
                       thumbVisibility: scrollBar!.isAlwaysShown,
                       controller: _scrollController,
+                      child: Padding(
+                          padding: const EdgeInsets.only(bottom: 3.0),
+                          child: ListView.builder(
+                            controller: _scrollController,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: items!.length,
+                            itemBuilder: (ctx, index) {
+                              return _buildItem(items![index]!, context);
+                            },
+                          )),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.only(bottom: 3.0),
                       child: ListView.builder(
                         controller: _scrollController,
                         scrollDirection: Axis.horizontal,
@@ -106,24 +118,17 @@ class MultiSelectChipDisplay<V> extends StatelessWidget {
                         itemBuilder: (ctx, index) {
                           return _buildItem(items![index]!, context);
                         },
-                      ),
-                    )
-                  : ListView.builder(
-                      controller: _scrollController,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: items!.length,
-                      itemBuilder: (ctx, index) {
-                        return _buildItem(items![index]!, context);
-                      },
-                    ),
+                      )),
             )
-          : Wrap(
-              children: items != null
-                  ? items!.map((item) => _buildItem(item!, context)).toList()
-                  : <Widget>[
-                      Container(),
-                    ],
-            ),
+          : Padding(
+              padding: const EdgeInsets.only(bottom: 3.0),
+              child: Wrap(
+                children: items != null
+                    ? items!.map((item) => _buildItem(item!, context)).toList()
+                    : <Widget>[
+                        Container(),
+                      ],
+              )),
     );
   }
 
