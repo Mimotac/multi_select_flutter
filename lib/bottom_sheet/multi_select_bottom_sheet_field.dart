@@ -415,7 +415,7 @@ class __MultiSelectBottomSheetFieldViewState<V>
   }
 
   _showBottomSheet(BuildContext ctx) async {
-    List<V>? myVar = await showModalBottomSheet<List<V>>(
+    await showModalBottomSheet<void>(
         isDismissible: widget.isDismissible,
         backgroundColor: widget.backgroundColor,
         barrierColor: widget.barrierColor,
@@ -460,8 +460,6 @@ class __MultiSelectBottomSheetFieldViewState<V>
             maxChildSize: widget.maxChildSize,
           );
         });
-    print(myVar.toString());
-    _selectedItems = myVar!;
   }
 
   @override
