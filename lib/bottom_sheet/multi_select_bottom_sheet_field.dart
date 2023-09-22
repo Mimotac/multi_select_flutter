@@ -17,9 +17,6 @@ class MultiSelectBottomSheetField<V> extends FormField<List<V>> {
   /// Specify the button icon.
   final Icon? buttonIcon;
 
-  /// Specify the prefix icon.
-  final Icon? prefixIcon;
-
   /// List of items to select from.
   final List<MultiSelectItem<V>> items;
 
@@ -31,9 +28,6 @@ class MultiSelectBottomSheetField<V> extends FormField<List<V>> {
 
   /// Fires when the an item is selected / unselected.
   final void Function(List<V>)? onSelectionChanged;
-
-  /// Fires when the field is tapped.
-  final void Function()? onTap;
 
   /// Fires when confirm is tapped.
   final void Function(List<V>) onConfirm;
@@ -52,9 +46,6 @@ class MultiSelectBottomSheetField<V> extends FormField<List<V>> {
 
   /// Sets the color of the checkbox or chip body when selected.
   final Color? selectedColor;
-
-  /// Sets the color of the scrollbar.
-  final Color? scrollbarColor;
 
   /// Set the hint text of the search field.
   final String? searchHint;
@@ -127,18 +118,15 @@ class MultiSelectBottomSheetField<V> extends FormField<List<V>> {
     this.title,
     this.buttonText,
     this.buttonIcon,
-    this.prefixIcon,
     this.listType,
     this.decoration,
     this.onSelectionChanged,
-    this.onTap,
     this.chipDisplay,
     this.initialValue = const [],
     this.searchable = false,
     this.confirmText,
     this.cancelText,
     this.selectedColor,
-    this.scrollbarColor,
     this.initialChildSize,
     this.minChildSize,
     this.maxChildSize,
@@ -181,7 +169,6 @@ class MultiSelectBottomSheetField<V> extends FormField<List<V>> {
                 initialValue: initialValue,
                 barrierColor: barrierColor,
                 buttonIcon: buttonIcon,
-                prefixIcon: prefixIcon,
                 buttonText: buttonText,
                 cancelText: cancelText,
                 chipDisplay: chipDisplay,
@@ -193,14 +180,12 @@ class MultiSelectBottomSheetField<V> extends FormField<List<V>> {
                 minChildSize: minChildSize,
                 onConfirm: onConfirm,
                 onSelectionChanged: onSelectionChanged,
-                onTap: onTap,
                 searchHintStyle: searchHintStyle,
                 searchIcon: searchIcon,
                 searchHint: searchHint,
                 searchTextStyle: searchTextStyle,
                 searchable: searchable,
                 selectedColor: selectedColor,
-                scrollbarColor: scrollbarColor,
                 separateSelectedItems: separateSelectedItems,
                 shape: shape,
                 checkColor: checkColor,
@@ -216,19 +201,16 @@ class _MultiSelectBottomSheetFieldView<V> extends StatefulWidget {
   final BoxDecoration? decoration;
   final Text? buttonText;
   final Icon? buttonIcon;
-  final Icon? prefixIcon;
   final List<MultiSelectItem<V>> items;
   final List<V> initialValue;
   final Widget? title;
   final void Function(List<V>)? onSelectionChanged;
-  final void Function()? onTap;
   final void Function(List<V>)? onConfirm;
   final bool searchable;
   final Text? confirmText;
   final Text? cancelText;
   final MultiSelectListType? listType;
   final Color? selectedColor;
-  final Color? scrollbarColor;
   final String? searchHint;
   final double? initialChildSize;
   final double? minChildSize;
@@ -255,11 +237,9 @@ class _MultiSelectBottomSheetFieldView<V> extends StatefulWidget {
     this.title,
     this.buttonText,
     this.buttonIcon,
-    this.prefixIcon,
     this.listType,
     this.decoration,
     this.onSelectionChanged,
-    this.onTap,
     this.onConfirm,
     this.chipDisplay,
     required this.initialValue,
@@ -267,7 +247,6 @@ class _MultiSelectBottomSheetFieldView<V> extends StatefulWidget {
     this.confirmText,
     this.cancelText,
     this.selectedColor,
-    this.scrollbarColor,
     this.initialChildSize,
     this.minChildSize,
     this.maxChildSize,
@@ -295,11 +274,9 @@ class _MultiSelectBottomSheetFieldView<V> extends StatefulWidget {
         title = field.title,
         buttonText = field.buttonText,
         buttonIcon = field.buttonIcon,
-        prefixIcon = field.prefixIcon,
         listType = field.listType,
         decoration = field.decoration,
         onSelectionChanged = field.onSelectionChanged,
-        onTap = field.onTap,
         onConfirm = field.onConfirm,
         chipDisplay = field.chipDisplay,
         initialValue = field.initialValue,
@@ -307,7 +284,6 @@ class _MultiSelectBottomSheetFieldView<V> extends StatefulWidget {
         confirmText = field.confirmText,
         cancelText = field.cancelText,
         selectedColor = field.selectedColor,
-        scrollbarColor = field.scrollbarColor,
         initialChildSize = field.initialChildSize,
         minChildSize = field.minChildSize,
         maxChildSize = field.maxChildSize,
@@ -438,7 +414,6 @@ class __MultiSelectBottomSheetFieldViewState<V>
             colorator: widget.colorator,
             searchHint: widget.searchHint,
             selectedColor: widget.selectedColor,
-            scrollbarColor: widget.scrollbarColor,
             listType: widget.listType,
             items: widget.items,
             cancelText: widget.cancelText,
@@ -470,11 +445,7 @@ class __MultiSelectBottomSheetFieldViewState<V>
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         InkWell(
-          borderRadius: BorderRadius.circular(12.0),
           onTap: () {
-            if (widget.onTap != null) {
-              widget.onTap!();
-            }
             _showBottomSheet(context);
           },
           child: Container(
@@ -505,15 +476,8 @@ class __MultiSelectBottomSheetFieldViewState<V>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Row(
-                  children: [
-                    Padding(
-                        padding: const EdgeInsetsDirectional.only(end: 12.0),
-                        child: widget.prefixIcon ?? const Icon(Icons.category)),
-                    widget.buttonText ?? const Text("Select"),
-                  ],
-                ),
-                widget.buttonIcon ?? const Icon(Icons.arrow_downward),
+                widget.buttonText ?? Text("Select"),
+                widget.buttonIcon ?? Icon(Icons.arrow_downward),
               ],
             ),
           ),
