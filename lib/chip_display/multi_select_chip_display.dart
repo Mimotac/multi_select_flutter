@@ -129,13 +129,6 @@ class MultiSelectChipDisplay<V> extends StatelessWidget {
   Widget _buildItem(MultiSelectItem<V> item, BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(2.0),
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(12.0)),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color(0xFF1CD8D2), Color(0xFF93EDC7)],
-          )),
       child: ChoiceChip(
         showCheckmark: false,
         shape: shape as OutlinedBorder?,
@@ -149,6 +142,13 @@ class MultiSelectChipDisplay<V> extends StatelessWidget {
             : null,
         label: Container(
           width: chipWidth,
+          decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(12.0)),
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Color(0xFF1CD8D2), Color(0xFF93EDC7)],
+              )),
           child: Text(
             item.label,
             overflow: TextOverflow.ellipsis,
