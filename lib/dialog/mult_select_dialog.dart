@@ -117,7 +117,6 @@ class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
   List<T> _selectedValues = [];
   bool _showSearch = false;
   List<MultiSelectItem<T>> _items;
-  final _crollController = ScrollController();
 
   _MultiSelectDialogState(this._items);
 
@@ -289,29 +288,17 @@ class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
         width: widget.width ?? MediaQuery.of(context).size.width * 0.73,
         child: widget.listType == null ||
                 widget.listType == MultiSelectListType.LIST
-            ? RawScrollbar(
-                thumbColor: widget.scrollbarColor,
-                radius: Radius.circular(16.0),
-                thickness: 4.0,
-                controller: _crollController,
-                child: ListView.builder(
-                  controller: _crollController,
-                  itemCount: _items.length,
-                  itemBuilder: (context, index) {
-                    return _buildListItem(_items[index]);
-                  },
-                ))
-            : RawScrollbar(
-                controller: _crollController,
-                thumbColor: widget.scrollbarColor,
-                radius: Radius.circular(16.0),
-                thickness: 4.0,
-                child: SingleChildScrollView(
-                  controller: _crollController,
-                  child: Wrap(
-                    children: _items.map(_buildChipItem).toList(),
-                  ),
-                )),
+            ? ListView.builder(
+                itemCount: _items.length,
+                itemBuilder: (context, index) {
+                  return _buildListItem(_items[index]);
+                },
+              )
+            : SingleChildScrollView(
+                child: Wrap(
+                  children: _items.map(_buildChipItem).toList(),
+                ),
+              ),
       ),
       actions: <Widget>[
         TextButton(
