@@ -127,48 +127,60 @@ class MultiSelectChipDisplay<V> extends StatelessWidget {
   }
 
   Widget _buildItem(MultiSelectItem<V> item, BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(2.0),
-      child: ChoiceChip(
-        showCheckmark: false,
-        shape: shape as OutlinedBorder?,
-        avatar: icon != null
-            ? Icon(
-                icon!.icon,
+    return Material(
+        borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+        color: Colors.transparent,
+        child: Ink(
+            decoration: BoxDecoration(
                 color: colorator != null && colorator!(item.value) != null
-                    ? colorator!(item.value)!.withOpacity(1)
-                    : icon!.color ?? Theme.of(context).primaryColor,
-              )
-            : null,
-        label: Container(
-          width: chipWidth,
-          child: Text(
-            item.label,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: colorator != null && colorator!(item.value) != null
-                  ? textStyle != null
-                      ? textStyle!.color ?? colorator!(item.value)
-                      : colorator!(item.value)
-                  : textStyle != null && textStyle!.color != null
-                      ? textStyle!.color
-                      : chipColor != null
-                          ? chipColor!.withOpacity(1)
-                          : null,
-              fontSize: textStyle != null ? textStyle!.fontSize : null,
-            ),
-          ),
-        ),
-        selected: items!.contains(item),
-        selectedColor: colorator != null && colorator!(item.value) != null
-            ? colorator!(item.value)
-            : chipColor != null
-                ? chipColor
-                : Theme.of(context).primaryColor.withOpacity(0.33),
-        onSelected: (_) {
-          if (onTap != null) onTap!(item.value);
-        },
-      ),
-    );
+                    ? colorator!(item.value)
+                    : chipColor != null
+                        ? chipColor
+                        : Theme.of(context).primaryColor.withOpacity(0.33),
+                borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Color(0xFF1CD8D2), Color(0xFF93EDC7)],
+                )),
+            child: InkWell(
+              borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+              child: Padding(
+                padding: EdgeInsets.only(right: 16.0, bottom: 8.0, top: 8),
+                child: Row(mainAxisSize: MainAxisSize.min, children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 11.0),
+                    child: icon != null
+                        ? Icon(
+                            icon!.icon,
+                            color: colorator != null &&
+                                    colorator!(item.value) != null
+                                ? colorator!(item.value)!.withOpacity(1)
+                                : icon!.color ?? Theme.of(context).primaryColor,
+                          )
+                        : null,
+                  ),
+                  Text(
+                    item.label,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: colorator != null && colorator!(item.value) != null
+                          ? textStyle != null
+                              ? textStyle!.color ?? colorator!(item.value)
+                              : colorator!(item.value)
+                          : textStyle != null && textStyle!.color != null
+                              ? textStyle!.color
+                              : chipColor != null
+                                  ? chipColor!.withOpacity(1)
+                                  : null,
+                      fontSize: textStyle != null ? textStyle!.fontSize : null,
+                    ),
+                  ),
+                ]),
+              ),
+              onTap: () {
+                if (onTap != null) onTap!(item.value);
+              },
+            )));
   }
 }
