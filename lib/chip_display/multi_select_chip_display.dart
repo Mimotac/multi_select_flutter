@@ -128,7 +128,7 @@ class MultiSelectChipDisplay<V> extends StatelessWidget {
 
   Widget _buildItem(MultiSelectItem<V> item, BuildContext context) {
     return Padding(
-        padding: const EdgeInsets.all(2.0),
+        padding: const EdgeInsets.all(3.0),
         child: Material(
             borderRadius: const BorderRadius.all(Radius.circular(12.0)),
             color: Colors.transparent,
@@ -160,6 +160,7 @@ class MultiSelectChipDisplay<V> extends StatelessWidget {
                                     ? colorator!(item.value)!.withOpacity(1)
                                     : icon!.color ??
                                         Theme.of(context).primaryColor,
+                                size: 18,
                               )
                             : null,
                       ),
@@ -167,19 +168,19 @@ class MultiSelectChipDisplay<V> extends StatelessWidget {
                         item.label,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                          color: colorator != null &&
-                                  colorator!(item.value) != null
-                              ? textStyle != null
-                                  ? textStyle!.color ?? colorator!(item.value)
-                                  : colorator!(item.value)
-                              : textStyle != null && textStyle!.color != null
-                                  ? textStyle!.color
-                                  : chipColor != null
-                                      ? chipColor!.withOpacity(1)
-                                      : null,
-                          fontSize:
-                              textStyle != null ? textStyle!.fontSize : null,
-                        ),
+                            color: colorator != null &&
+                                    colorator!(item.value) != null
+                                ? textStyle != null
+                                    ? textStyle!.color ?? colorator!(item.value)
+                                    : colorator!(item.value)
+                                : textStyle != null && textStyle!.color != null
+                                    ? textStyle!.color
+                                    : chipColor != null
+                                        ? chipColor!.withOpacity(1)
+                                        : null,
+                            fontSize:
+                                textStyle != null ? textStyle!.fontSize : null,
+                            fontWeight: FontWeight.w600),
                       ),
                     ]),
                   ),
