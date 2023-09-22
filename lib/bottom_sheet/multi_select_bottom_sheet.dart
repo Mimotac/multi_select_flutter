@@ -36,6 +36,9 @@ class MultiSelectBottomSheet<T> extends StatefulWidget
   /// Sets the color of the checkbox or chip when it's selected.
   final Color? selectedColor;
 
+  /// Sets the color of the scrollbar.
+  final Color? scrollbarColor;
+
   /// Set the initial height of the BottomSheet.
   final double? initialChildSize;
 
@@ -90,6 +93,7 @@ class MultiSelectBottomSheet<T> extends StatefulWidget
     this.confirmText,
     this.searchable = false,
     this.selectedColor,
+    this.scrollbarColor,
     this.initialChildSize,
     this.minChildSize,
     this.maxChildSize,
@@ -304,22 +308,30 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
               Expanded(
                 child: widget.listType == null ||
                         widget.listType == MultiSelectListType.LIST
-                    ? ListView.builder(
-                        controller: scrollController,
-                        itemCount: _items.length,
-                        itemBuilder: (context, index) {
-                          return _buildListItem(_items[index]);
-                        },
-                      )
-                    : SingleChildScrollView(
-                        controller: scrollController,
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          child: Wrap(
-                            children: _items.map(_buildChipItem).toList(),
+                    ? RawScrollbar(
+                        thumbColor: widget.scrollbarColor,
+                        radius: Radius.circular(16.0),
+                        thickness: 4.0,
+                        child: ListView.builder(
+                          controller: scrollController,
+                          itemCount: _items.length,
+                          itemBuilder: (context, index) {
+                            return _buildListItem(_items[index]);
+                          },
+                        ))
+                    : RawScrollbar(
+                        thumbColor: widget.scrollbarColor,
+                        radius: Radius.circular(16.0),
+                        thickness: 4.0,
+                        child: SingleChildScrollView(
+                          controller: scrollController,
+                          child: Container(
+                            padding: EdgeInsets.all(10),
+                            child: Wrap(
+                              children: _items.map(_buildChipItem).toList(),
+                            ),
                           ),
-                        ),
-                      ),
+                        )),
               ),
               Container(
                 padding: EdgeInsets.all(2),

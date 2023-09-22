@@ -290,8 +290,8 @@ class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
                 widget.listType == MultiSelectListType.LIST
             ? RawScrollbar(
                 thumbColor: widget.scrollbarColor,
-                radius: Radius.circular(20),
-                thickness: 5,
+                radius: Radius.circular(16.0),
+                thickness: 4.0,
                 child: ListView.builder(
                   itemCount: _items.length,
                   itemBuilder: (context, index) {
@@ -300,8 +300,8 @@ class _MultiSelectDialogState<T> extends State<MultiSelectDialog<T>> {
                 ))
             : RawScrollbar(
                 thumbColor: widget.scrollbarColor,
-                radius: Radius.circular(20),
-                thickness: 5,
+                radius: Radius.circular(16.0),
+                thickness: 4.0,
                 child: SingleChildScrollView(
                   child: Wrap(
                     children: _items.map(_buildChipItem).toList(),
