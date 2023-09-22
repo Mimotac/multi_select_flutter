@@ -308,30 +308,22 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
               Expanded(
                 child: widget.listType == null ||
                         widget.listType == MultiSelectListType.LIST
-                    ? RawScrollbar(
-                        thumbColor: widget.scrollbarColor,
-                        radius: Radius.circular(16.0),
-                        thickness: 4.0,
-                        child: ListView.builder(
-                          controller: scrollController,
-                          itemCount: _items.length,
-                          itemBuilder: (context, index) {
-                            return _buildListItem(_items[index]);
-                          },
-                        ))
-                    : RawScrollbar(
-                        thumbColor: widget.scrollbarColor,
-                        radius: Radius.circular(16.0),
-                        thickness: 4.0,
-                        child: SingleChildScrollView(
-                          controller: scrollController,
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            child: Wrap(
-                              children: _items.map(_buildChipItem).toList(),
-                            ),
+                    ? ListView.builder(
+                        controller: scrollController,
+                        itemCount: _items.length,
+                        itemBuilder: (context, index) {
+                          return _buildListItem(_items[index]);
+                        },
+                      )
+                    : SingleChildScrollView(
+                        controller: scrollController,
+                        child: Container(
+                          padding: EdgeInsets.all(10),
+                          child: Wrap(
+                            children: _items.map(_buildChipItem).toList(),
                           ),
-                        )),
+                        ),
+                      ),
               ),
               Container(
                 padding: EdgeInsets.all(2),
