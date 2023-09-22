@@ -470,6 +470,7 @@ class __MultiSelectBottomSheetFieldViewState<V>
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         InkWell(
+          borderRadius: BorderRadius.circular(12.0),
           onTap: () {
             if (widget.onTap != null) {
               widget.onTap!();
@@ -504,10 +505,15 @@ class __MultiSelectBottomSheetFieldViewState<V>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Padding(
-                    padding: const EdgeInsetsDirectional.only(end: 12.0),
-                    child: widget.prefixIcon ?? const Icon(Icons.category)),
-                widget.buttonText ?? const Text("Select"),
+                Row(
+                  children: [
+                    Padding(
+                        padding: const EdgeInsetsDirectional.only(end: 12.0),
+                        child: widget.prefixIcon ?? const Icon(Icons.category)),
+                    widget.buttonText ?? const Text("Select"),
+                  ],
+                ),
+                widget.buttonIcon ?? const Icon(Icons.arrow_downward),
               ],
             ),
           ),
