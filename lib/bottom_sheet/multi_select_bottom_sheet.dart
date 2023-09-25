@@ -237,73 +237,32 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
         expand: false,
         builder: (BuildContext context, ScrollController scrollController) {
           return Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: const EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    _showSearch
-                        ? Expanded(
-                            child: Container(
-                              padding: const EdgeInsets.only(left: 10),
-                              child: TextField(
-                                autofocus: true,
-                                style: widget.searchTextStyle,
-                                decoration: InputDecoration(
-                                  hintStyle: widget.searchHintStyle,
-                                  hintText: widget.searchHint ?? "Search",
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: widget.selectedColor ??
-                                            Theme.of(context).primaryColor),
-                                  ),
-                                ),
-                                onChanged: (val) {
-                                  List<MultiSelectItem<T>> filteredList = [];
-                                  filteredList = widget.updateSearchQuery(
-                                      val, widget.items);
-                                  setState(() {
-                                    if (widget.separateSelectedItems) {
-                                      _items =
-                                          widget.separateSelected(filteredList);
-                                    } else {
-                                      _items = filteredList;
-                                    }
-                                  });
-                                },
-                              ),
-                            ),
-                          )
-                        : widget.title ??
-                            Text(
-                              "Select",
-                              style: TextStyle(fontSize: 18),
-                            ),
-                    widget.searchable
-                        ? IconButton(
-                            icon: _showSearch
-                                ? widget.closeSearchIcon ?? Icon(Icons.close)
-                                : widget.searchIcon ?? Icon(Icons.search),
-                            onPressed: () {
-                              setState(() {
-                                _showSearch = !_showSearch;
-                                if (!_showSearch) {
-                                  if (widget.separateSelectedItems) {
-                                    _items =
-                                        widget.separateSelected(widget.items);
-                                  } else {
-                                    _items = widget.items;
-                                  }
-                                }
-                              });
-                            },
-                          )
-                        : Padding(
-                            padding: EdgeInsets.all(15),
-                          ),
-                  ],
-                ),
+                  padding: const EdgeInsets.only(top: 6.0, bottom: 16.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.grey[600],
+                        borderRadius: BorderRadius.circular(3.0)),
+                    width: 32,
+                    height: 4,
+                  )),
+              const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                      padding: EdgeInsets.only(left: 16.0, bottom: 3.0),
+                      child: Text(
+                        "Choose your image source",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ))),
+              Divider(
+                indent: 16,
+                endIndent: 16,
+                height: 0,
+                thickness: 0.3,
+                color: Theme.of(context).canvasColor,
               ),
               Expanded(
                 child: widget.listType == null ||
@@ -354,13 +313,14 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
                                   widget.onConfirmTap(context, _selectedValues,
                                       widget.onConfirm);
                                 },
-                                child: const Center(
-                                    child: Text(
-                                  "Pick",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ))),
+                                child: Center(
+                                    child: widget.confirmText ??
+                                        Text(
+                                          "Ok",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ))),
                           ))))
             ],
           );
