@@ -423,6 +423,7 @@ class __MultiSelectBottomSheetFieldViewState<V>
             RoundedRectangleBorder(
               borderRadius: BorderRadius.vertical(top: Radius.circular(15.0)),
             ),
+        isScrollControlled: true,
         context: context,
         builder: (context) {
           return MultiSelectBottomSheet<V>(
