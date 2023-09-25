@@ -230,8 +230,8 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
     return Container(
       padding:
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      child: DraggableScrollableSheet(
-        builder: (BuildContext context, ScrollController scrollController) {
+      child: StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -333,7 +333,6 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
               widget.listType == null ||
                       widget.listType == MultiSelectListType.LIST
                   ? ListView.builder(
-                      controller: scrollController,
                       itemCount: _items.length,
                       itemBuilder: (context, index) {
                         return _buildListItem(_items[index]);
