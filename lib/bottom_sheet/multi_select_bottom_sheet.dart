@@ -325,52 +325,43 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
                         ),
                       ),
               ),
-              Container(
-                padding: EdgeInsets.all(2),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () {
-                          widget.onCancelTap(context, widget.initialValue);
-                        },
-                        child: widget.cancelText ??
-                            Text(
-                              "CANCEL",
-                              style: TextStyle(
-                                color: (widget.selectedColor != null &&
-                                        widget.selectedColor !=
-                                            Colors.transparent)
-                                    ? widget.selectedColor!.withOpacity(1)
-                                    : Theme.of(context).primaryColor,
-                              ),
-                            ),
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () {
-                          widget.onConfirmTap(
-                              context, _selectedValues, widget.onConfirm);
-                        },
-                        child: widget.confirmText ??
-                            Text(
-                              "OK",
-                              style: TextStyle(
-                                color: (widget.selectedColor != null &&
-                                        widget.selectedColor !=
-                                            Colors.transparent)
-                                    ? widget.selectedColor!.withOpacity(1)
-                                    : Theme.of(context).primaryColor,
-                              ),
-                            ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Material(
+                      color: Colors.transparent,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(12.0)),
+                      elevation: 1.0,
+                      child: SizedBox(
+                          width: MediaQuery.of(context).size.width / 1.5,
+                          height: 40,
+                          child: Ink(
+                            decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12.0)),
+                                gradient: LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Color(0xFF1CD8D2),
+                                    Color(0xFF93EDC7)
+                                  ],
+                                )),
+                            child: InkWell(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(12.0)),
+                                onTap: () {
+                                  widget.onConfirmTap(context, _selectedValues,
+                                      widget.onConfirm);
+                                },
+                                child: const Center(
+                                    child: Text(
+                                  "Pick",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                ))),
+                          ))))
             ],
           );
         },
