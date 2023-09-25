@@ -330,19 +330,21 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
             Expanded(
                 child: widget.listType == null ||
                         widget.listType == MultiSelectListType.LIST
-                    ? ListView.builder(
+                    ? SingleChildScrollView(
+                        child: ListView.builder(
                         shrinkWrap: true,
                         itemCount: _items.length,
                         itemBuilder: (context, index) {
                           return _buildListItem(_items[index]);
                         },
-                      )
-                    : Container(
+                      ))
+                    : SingleChildScrollView(
+                        child: Container(
                         padding: EdgeInsets.all(10),
                         child: Wrap(
                           children: _items.map(_buildChipItem).toList(),
                         ),
-                      )),
+                      ))),
             Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Material(
