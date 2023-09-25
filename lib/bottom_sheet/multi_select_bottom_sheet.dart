@@ -228,7 +228,6 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
-      expand: false,
       builder: (BuildContext context, ScrollController scrollController) {
         return Column(
           mainAxisSize: MainAxisSize.min,
