@@ -344,13 +344,10 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
                           return _buildListItem(_items[index]);
                         },
                       )
-                    : SingleChildScrollView(
-                        controller: scrollController,
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          child: Wrap(
-                            children: _items.map(_buildChipItem).toList(),
-                          ),
+                    : Container(
+                        padding: EdgeInsets.all(10),
+                        child: Wrap(
+                          children: _items.map(_buildChipItem).toList(),
                         ),
                       ),
               ),
