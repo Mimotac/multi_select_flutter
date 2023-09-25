@@ -231,10 +231,6 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
       padding:
           EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       child: DraggableScrollableSheet(
-        initialChildSize: widget.initialChildSize ?? 0.3,
-        minChildSize: widget.minChildSize ?? 0.3,
-        maxChildSize: widget.maxChildSize ?? 0.6,
-        expand: false,
         builder: (BuildContext context, ScrollController scrollController) {
           return Column(
             mainAxisSize: MainAxisSize.min,
