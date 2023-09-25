@@ -227,8 +227,12 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return StatefulBuilder(
-      builder: (BuildContext context, StateSetter setState) {
+    return DraggableScrollableSheet(
+      initialChildSize: widget.initialChildSize ?? 0.3,
+      minChildSize: widget.minChildSize ?? 0.3,
+      maxChildSize: widget.maxChildSize ?? 0.6,
+      expand: false,
+      builder: (BuildContext context, ScrollController scrollController) {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -331,20 +335,22 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
                 child: widget.listType == null ||
                         widget.listType == MultiSelectListType.LIST
                     ? SingleChildScrollView(
+                        controller: scrollController,
                         child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: _items.length,
-                        itemBuilder: (context, index) {
-                          return _buildListItem(_items[index]);
-                        },
-                      ))
+                          shrinkWrap: true,
+                          itemCount: _items.length,
+                          itemBuilder: (context, index) {
+                            return _buildListItem(_items[index]);
+                          },
+                        ))
                     : SingleChildScrollView(
+                        controller: scrollController,
                         child: Container(
-                        padding: EdgeInsets.all(10),
-                        child: Wrap(
-                          children: _items.map(_buildChipItem).toList(),
-                        ),
-                      ))),
+                          padding: EdgeInsets.all(10),
+                          child: Wrap(
+                            children: _items.map(_buildChipItem).toList(),
+                          ),
+                        ))),
             Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Material(
