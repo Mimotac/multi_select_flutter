@@ -239,6 +239,75 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              _showSearch
+                  ? Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Container(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: TextField(
+                                autofocus: true,
+                                style: widget.searchTextStyle,
+                                decoration: InputDecoration(
+                                  hintStyle: widget.searchHintStyle,
+                                  hintText: widget.searchHint ?? "Search",
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: widget.selectedColor ??
+                                            Theme.of(context).primaryColor),
+                                  ),
+                                ),
+                                onChanged: (val) {
+                                  List<MultiSelectItem<T>> filteredList = [];
+                                  filteredList = widget.updateSearchQuery(
+                                      val, widget.items);
+                                  setState(() {
+                                    if (widget.separateSelectedItems) {
+                                      _items =
+                                          widget.separateSelected(filteredList);
+                                    } else {
+                                      _items = filteredList;
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                          widget.title ??
+                              Text(
+                                "Select",
+                                style: TextStyle(fontSize: 18),
+                              ),
+                          widget.searchable
+                              ? IconButton(
+                                  icon: _showSearch
+                                      ? widget.closeSearchIcon ??
+                                          Icon(Icons.close)
+                                      : widget.searchIcon ?? Icon(Icons.search),
+                                  onPressed: () {
+                                    setState(() {
+                                      _showSearch = !_showSearch;
+                                      if (!_showSearch) {
+                                        if (widget.separateSelectedItems) {
+                                          _items = widget
+                                              .separateSelected(widget.items);
+                                        } else {
+                                          _items = widget.items;
+                                        }
+                                      }
+                                    });
+                                  },
+                                )
+                              : Padding(
+                                  padding: EdgeInsets.all(15),
+                                ),
+                        ],
+                      ),
+                    )
+                  : Container(),
               Padding(
                   padding: const EdgeInsets.only(top: 6.0, bottom: 16.0),
                   child: Container(
@@ -248,15 +317,16 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
                     width: 32,
                     height: 4,
                   )),
-              const Align(
+              Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
                       padding: EdgeInsets.only(left: 16.0, bottom: 3.0),
-                      child: Text(
-                        "Choose your image source",
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
-                      ))),
+                      child: widget.title ??
+                          Text(
+                            "Select",
+                            style: TextStyle(
+                                fontSize: 16, fontWeight: FontWeight.bold),
+                          ))),
               Divider(
                 indent: 16,
                 endIndent: 16,
