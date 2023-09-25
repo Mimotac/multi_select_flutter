@@ -333,6 +333,7 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
               widget.listType == null ||
                       widget.listType == MultiSelectListType.LIST
                   ? ListView.builder(
+                      shrinkWrap: true,
                       itemCount: _items.length,
                       itemBuilder: (context, index) {
                         return _buildListItem(_items[index]);
