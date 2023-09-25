@@ -328,7 +328,7 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
               color: Theme.of(context).canvasColor,
             ),
             Container(
-                height: 200, // Hauteur de la liste
+                height: MediaQuery.of(context).size.width,
                 child: widget.listType == null ||
                         widget.listType == MultiSelectListType.LIST
                     ? ListView.builder(
