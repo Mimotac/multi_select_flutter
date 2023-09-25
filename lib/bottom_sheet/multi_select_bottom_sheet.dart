@@ -334,23 +334,21 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
                 thickness: 0.3,
                 color: Theme.of(context).canvasColor,
               ),
-              Expanded(
-                child: widget.listType == null ||
-                        widget.listType == MultiSelectListType.LIST
-                    ? ListView.builder(
-                        controller: scrollController,
-                        itemCount: _items.length,
-                        itemBuilder: (context, index) {
-                          return _buildListItem(_items[index]);
-                        },
-                      )
-                    : Container(
-                        padding: EdgeInsets.all(10),
-                        child: Wrap(
-                          children: _items.map(_buildChipItem).toList(),
-                        ),
+              widget.listType == null ||
+                      widget.listType == MultiSelectListType.LIST
+                  ? ListView.builder(
+                      controller: scrollController,
+                      itemCount: _items.length,
+                      itemBuilder: (context, index) {
+                        return _buildListItem(_items[index]);
+                      },
+                    )
+                  : Container(
+                      padding: EdgeInsets.all(10),
+                      child: Wrap(
+                        children: _items.map(_buildChipItem).toList(),
                       ),
-              ),
+                    ),
               Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Material(
