@@ -229,106 +229,108 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
   Widget build(BuildContext context) {
     return StatefulBuilder(
       builder: (BuildContext context, StateSetter setState) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _showSearch
-                ? Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: TextField(
-                              autofocus: true,
-                              style: widget.searchTextStyle,
-                              decoration: InputDecoration(
-                                hintStyle: widget.searchHintStyle,
-                                hintText: widget.searchHint ?? "Search",
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: widget.selectedColor ??
-                                          Theme.of(context).primaryColor),
-                                ),
-                              ),
-                              onChanged: (val) {
-                                List<MultiSelectItem<T>> filteredList = [];
-                                filteredList =
-                                    widget.updateSearchQuery(val, widget.items);
-                                setState(() {
-                                  if (widget.separateSelectedItems) {
-                                    _items =
-                                        widget.separateSelected(filteredList);
-                                  } else {
-                                    _items = filteredList;
-                                  }
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-                        widget.title ??
-                            Text(
-                              "Select",
-                              style: TextStyle(fontSize: 18),
-                            ),
-                        widget.searchable
-                            ? IconButton(
-                                icon: _showSearch
-                                    ? widget.closeSearchIcon ??
-                                        Icon(Icons.close)
-                                    : widget.searchIcon ?? Icon(Icons.search),
-                                onPressed: () {
-                                  setState(() {
-                                    _showSearch = !_showSearch;
-                                    if (!_showSearch) {
+        return SingleChildScrollView(
+            controller: _scrollController,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _showSearch
+                    ? Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Container(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: TextField(
+                                  autofocus: true,
+                                  style: widget.searchTextStyle,
+                                  decoration: InputDecoration(
+                                    hintStyle: widget.searchHintStyle,
+                                    hintText: widget.searchHint ?? "Search",
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: widget.selectedColor ??
+                                              Theme.of(context).primaryColor),
+                                    ),
+                                  ),
+                                  onChanged: (val) {
+                                    List<MultiSelectItem<T>> filteredList = [];
+                                    filteredList = widget.updateSearchQuery(
+                                        val, widget.items);
+                                    setState(() {
                                       if (widget.separateSelectedItems) {
                                         _items = widget
-                                            .separateSelected(widget.items);
+                                            .separateSelected(filteredList);
                                       } else {
-                                        _items = widget.items;
+                                        _items = filteredList;
                                       }
-                                    }
-                                  });
-                                },
-                              )
-                            : Padding(
-                                padding: EdgeInsets.all(15),
+                                    });
+                                  },
+                                ),
                               ),
-                      ],
-                    ),
-                  )
-                : Container(),
-            Padding(
-                padding: const EdgeInsets.only(top: 6.0, bottom: 16.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.grey[600],
-                      borderRadius: BorderRadius.circular(3.0)),
-                  width: 32,
-                  height: 4,
-                )),
-            Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                    padding: EdgeInsets.only(left: 16.0, bottom: 3.0),
-                    child: widget.title ??
-                        Text(
-                          "Select",
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        ))),
-            Divider(
-              indent: 16,
-              endIndent: 16,
-              height: 0,
-              thickness: 0.3,
-              color: Theme.of(context).canvasColor,
-            ),
-            Container(
-                child: widget.listType == null ||
+                            ),
+                            widget.title ??
+                                Text(
+                                  "Select",
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                            widget.searchable
+                                ? IconButton(
+                                    icon: _showSearch
+                                        ? widget.closeSearchIcon ??
+                                            Icon(Icons.close)
+                                        : widget.searchIcon ??
+                                            Icon(Icons.search),
+                                    onPressed: () {
+                                      setState(() {
+                                        _showSearch = !_showSearch;
+                                        if (!_showSearch) {
+                                          if (widget.separateSelectedItems) {
+                                            _items = widget
+                                                .separateSelected(widget.items);
+                                          } else {
+                                            _items = widget.items;
+                                          }
+                                        }
+                                      });
+                                    },
+                                  )
+                                : Padding(
+                                    padding: EdgeInsets.all(15),
+                                  ),
+                          ],
+                        ),
+                      )
+                    : Container(),
+                Padding(
+                    padding: const EdgeInsets.only(top: 6.0, bottom: 16.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Colors.grey[600],
+                          borderRadius: BorderRadius.circular(3.0)),
+                      width: 32,
+                      height: 4,
+                    )),
+                Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                        padding: EdgeInsets.only(left: 16.0, bottom: 3.0),
+                        child: widget.title ??
+                            Text(
+                              "Select",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ))),
+                Divider(
+                  indent: 16,
+                  endIndent: 16,
+                  height: 0,
+                  thickness: 0.3,
+                  color: Theme.of(context).canvasColor,
+                ),
+                widget.listType == null ||
                         widget.listType == MultiSelectListType.LIST
                     ? ListView.builder(
                         controller: _scrollController,
@@ -338,50 +340,52 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
                           return _buildListItem(_items[index]);
                         },
                       )
-                    : SingleChildScrollView(
-                        controller: _scrollController,
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          child: Wrap(
-                            children: _items.map(_buildChipItem).toList(),
-                          ),
-                        ))),
-            Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Material(
-                    color: Colors.transparent,
-                    borderRadius: const BorderRadius.all(Radius.circular(12.0)),
-                    elevation: 1.0,
-                    child: SizedBox(
-                        width: MediaQuery.of(context).size.width / 1.5,
-                        height: 40,
-                        child: Ink(
-                          decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12.0)),
-                              gradient: LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [Color(0xFF1CD8D2), Color(0xFF93EDC7)],
-                              )),
-                          child: InkWell(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(12.0)),
-                              onTap: () {
-                                widget.onConfirmTap(
-                                    context, _selectedValues, widget.onConfirm);
-                              },
-                              child: Center(
-                                  child: widget.confirmText ??
-                                      Text(
-                                        "Ok",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white),
-                                      ))),
-                        ))))
-          ],
-        );
+                    : Container(
+                        padding: EdgeInsets.all(10),
+                        child: Wrap(
+                          children: _items.map(_buildChipItem).toList(),
+                        ),
+                      ),
+                Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Material(
+                        color: Colors.transparent,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12.0)),
+                        elevation: 1.0,
+                        child: SizedBox(
+                            width: MediaQuery.of(context).size.width / 1.5,
+                            height: 40,
+                            child: Ink(
+                              decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12.0)),
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Color(0xFF1CD8D2),
+                                      Color(0xFF93EDC7)
+                                    ],
+                                  )),
+                              child: InkWell(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(12.0)),
+                                  onTap: () {
+                                    widget.onConfirmTap(context,
+                                        _selectedValues, widget.onConfirm);
+                                  },
+                                  child: Center(
+                                      child: widget.confirmText ??
+                                          Text(
+                                            "Ok",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white),
+                                          ))),
+                            ))))
+              ],
+            ));
       },
     );
   }
