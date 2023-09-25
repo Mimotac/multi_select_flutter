@@ -119,7 +119,7 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
   List<T> _selectedValues = [];
   bool _showSearch = false;
   List<MultiSelectItem<T>> _items;
-
+  final ScrollController _scrollController = ScrollController();
   _MultiSelectBottomSheetState(this._items);
 
   @override
@@ -227,12 +227,8 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
 
   @override
   Widget build(BuildContext context) {
-    return DraggableScrollableSheet(
-      initialChildSize: widget.initialChildSize ?? 0.5,
-      minChildSize: widget.minChildSize ?? 0.5,
-      maxChildSize: widget.maxChildSize ?? 0.8,
-      expand: false,
-      builder: (BuildContext context, ScrollController scrollController) {
+    return StatefulBuilder(
+      builder: (BuildContext context, StateSetter setState) {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -335,7 +331,7 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
                 child: widget.listType == null ||
                         widget.listType == MultiSelectListType.LIST
                     ? ListView.builder(
-                        controller: scrollController,
+                        controller: _scrollController,
                         shrinkWrap: true,
                         itemCount: _items.length,
                         itemBuilder: (context, index) {
@@ -343,7 +339,7 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
                         },
                       )
                     : SingleChildScrollView(
-                        controller: scrollController,
+                        controller: _scrollController,
                         child: Container(
                           padding: EdgeInsets.all(10),
                           child: Wrap(
