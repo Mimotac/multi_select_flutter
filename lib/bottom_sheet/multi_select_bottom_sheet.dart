@@ -331,22 +331,26 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
                 height: MediaQuery.of(context).size.width,
                 child: widget.listType == null ||
                         widget.listType == MultiSelectListType.LIST
-                    ? ListView.builder(
+                    ? Scrollbar(
                         controller: _scrollController,
-                        shrinkWrap: true,
-                        itemCount: _items.length,
-                        itemBuilder: (context, index) {
-                          return _buildListItem(_items[index]);
-                        },
-                      )
-                    : SingleChildScrollView(
+                        child: ListView.builder(
+                          controller: _scrollController,
+                          shrinkWrap: true,
+                          itemCount: _items.length,
+                          itemBuilder: (context, index) {
+                            return _buildListItem(_items[index]);
+                          },
+                        ))
+                    : Scrollbar(
                         controller: _scrollController,
-                        child: Container(
-                          padding: EdgeInsets.all(10),
-                          child: Wrap(
-                            children: _items.map(_buildChipItem).toList(),
-                          ),
-                        ))),
+                        child: SingleChildScrollView(
+                            controller: _scrollController,
+                            child: Container(
+                              padding: EdgeInsets.all(10),
+                              child: Wrap(
+                                children: _items.map(_buildChipItem).toList(),
+                              ),
+                            )))),
             Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Material(
