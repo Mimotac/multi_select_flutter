@@ -143,7 +143,7 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
   Widget _buildListItem(MultiSelectItem<T> item) {
     return Theme(
       data: ThemeData(
-        unselectedWidgetColor: Colors.transparent,
+        unselectedWidgetColor: widget.unselectedColor ?? Colors.black54,
       ),
       child: CheckboxListTile(
         checkColor: widget.checkColor,
@@ -182,47 +182,51 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
 
   /// Returns a ChoiceChip
   Widget _buildChipItem(MultiSelectItem<T> item) {
-    return Container(
-      padding: const EdgeInsets.all(2.0),
-      child: ChoiceChip(
-        backgroundColor: widget.unselectedColor,
-        selectedColor:
-            widget.colorator != null && widget.colorator!(item.value) != null
+    return Theme(
+        data: ThemeData(
+          unselectedWidgetColor: widget.unselectedColor ?? Colors.black54,
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(2.0),
+          child: ChoiceChip(
+            backgroundColor: widget.unselectedColor,
+            selectedColor: widget.colorator != null &&
+                    widget.colorator!(item.value) != null
                 ? widget.colorator!(item.value)
                 : widget.selectedColor != null
                     ? widget.selectedColor
                     : Theme.of(context).primaryColor.withOpacity(0.35),
-        label: Text(
-          item.label,
-          style: _selectedValues.contains(item.value)
-              ? TextStyle(
-                  color: widget.selectedItemsTextStyle?.color ??
-                      widget.colorator?.call(item.value) ??
-                      widget.selectedColor?.withOpacity(1) ??
-                      Theme.of(context).primaryColor,
-                  fontSize: widget.selectedItemsTextStyle != null
-                      ? widget.selectedItemsTextStyle!.fontSize
-                      : null,
-                )
-              : widget.itemsTextStyle,
-        ),
-        selected: item.selected,
-        onSelected: (checked) {
-          if (checked) {
-            item.selected = true;
-          } else {
-            item.selected = false;
-          }
-          setState(() {
-            _selectedValues = widget.onItemCheckedChange(
-                _selectedValues, item.value, checked);
-          });
-          if (widget.onSelectionChanged != null) {
-            widget.onSelectionChanged!(_selectedValues);
-          }
-        },
-      ),
-    );
+            label: Text(
+              item.label,
+              style: _selectedValues.contains(item.value)
+                  ? TextStyle(
+                      color: widget.selectedItemsTextStyle?.color ??
+                          widget.colorator?.call(item.value) ??
+                          widget.selectedColor?.withOpacity(1) ??
+                          Theme.of(context).primaryColor,
+                      fontSize: widget.selectedItemsTextStyle != null
+                          ? widget.selectedItemsTextStyle!.fontSize
+                          : null,
+                    )
+                  : widget.itemsTextStyle,
+            ),
+            selected: item.selected,
+            onSelected: (checked) {
+              if (checked) {
+                item.selected = true;
+              } else {
+                item.selected = false;
+              }
+              setState(() {
+                _selectedValues = widget.onItemCheckedChange(
+                    _selectedValues, item.value, checked);
+              });
+              if (widget.onSelectionChanged != null) {
+                widget.onSelectionChanged!(_selectedValues);
+              }
+            },
+          ),
+        ));
   }
 
   @override
