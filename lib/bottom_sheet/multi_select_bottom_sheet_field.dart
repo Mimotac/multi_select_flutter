@@ -511,7 +511,7 @@ class __MultiSelectBottomSheetFieldViewState<V>
                     widget.buttonText ?? const Text("Select"),
                   ],
                 ),
-                widget.buttonIcon ?? const Icon(Icons.arrow_downward),
+                widget.buttonIcon ?? SizedBox.shrink(),
               ],
             ),
           ),
