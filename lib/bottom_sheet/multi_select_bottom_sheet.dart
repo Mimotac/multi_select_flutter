@@ -185,7 +185,8 @@ class _MultiSelectBottomSheetState<T> extends State<MultiSelectBottomSheet<T>> {
     return Container(
       padding: const EdgeInsets.all(2.0),
       child: ChoiceChip(
-        backgroundColor: Colors.red,
+        side: BorderSide(color: Colors.transparent),
+        backgroundColor: widget.unselectedColor,
         selectedColor:
             widget.colorator != null && widget.colorator!(item.value) != null
                 ? widget.colorator!(item.value)
